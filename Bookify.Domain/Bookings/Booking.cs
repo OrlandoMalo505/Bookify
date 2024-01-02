@@ -54,7 +54,7 @@ public sealed class Booking : Entity
         Guid userId,
         DateRange duration,
         PricingService pricingService,
-        DateTime utcNow)
+        DateTime createdUtcNow)
     {
         var pricingDetails = pricingService.CalculatePrice(apartment, duration);
 
@@ -68,11 +68,11 @@ public sealed class Booking : Entity
             pricingDetails.AmenitiesUpCharge,
             pricingDetails.TotalPrice,
             BookingStatus.Reserved,
-            utcNow);
+            createdUtcNow);
 
         booking.RaiseDomainEvent(new BookingReservedDomainEvent(booking.Id));
 
-        apartment.LastBookedOnUtc = utcNow;
+        apartment.LastBookedOnUtc = createdUtcNow;
 
         return booking;
     }
