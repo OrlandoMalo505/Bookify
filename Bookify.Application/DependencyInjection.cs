@@ -1,4 +1,5 @@
-﻿using Bookify.Domain.Bookings;
+﻿using Bookify.Application.Abstractions.Behaviours;
+using Bookify.Domain.Bookings;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ public static class DependencyInjection
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+
+            config.AddOpenBehavior(typeof(LoggingBeaviour<,>));
         });
 
         services.AddTransient<PricingService>();
