@@ -1,4 +1,5 @@
-﻿using Bookify.Application.Bookings.ReserveBooking;
+﻿using Bookify.Api.Extensions;
+using Bookify.Application.Bookings.ReserveBooking;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,7 @@ public class BookingsController : ControllerBase
 
         if (result.IsFailure)
         {
-            return Results.BadRequest(result.Error);
+            return result.ToProblemDetails();
         }
 
         return Results.CreatedAtRoute(nameof(GetBooking), new { id = result.Value }, result.Value);

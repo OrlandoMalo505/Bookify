@@ -1,4 +1,5 @@
 using Bookify.Api.Extensions;
+using Bookify.Api.Middleware;
 using Bookify.Application;
 using Bookify.Infrastructure;
 
@@ -10,8 +11,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication();
-
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
@@ -24,6 +27,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseExceptionHandler();
+
+//app.UseCustomExceptionHandler();
 
 //app.UseAuthorization();
 

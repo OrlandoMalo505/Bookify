@@ -1,5 +1,6 @@
 ﻿using Bookify.Application.Abstractions.Messaging;
 using Bookify.Application.Exceptions;
+using Bookify.Domain.Abstractions;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
@@ -33,11 +34,7 @@ public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TReque
             .Select(v => v.Validate(context))
             .Where(v => v.Errors.Any())
             .SelectMany(v => v.Errors)
-            .Select(v => new ValidationError
-            {
-                PropertyName = v.PropertyName,
-                ErrorMessage = v.ErrorMessage
-            })
+            .Select(v => new Error(v.PropertyName, v.ErrorMessage))
             .ToList();
 
         if (validationErrors.Any())
