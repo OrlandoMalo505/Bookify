@@ -32,13 +32,13 @@ internal sealed class ReviewConfiguration : IEntityTypeConfiguration<Review>
             .WithMany()
             .HasForeignKey(review => review.ApartmentId);
 
-        builder.HasOne<Booking>()
-            .WithMany()
-            .HasForeignKey(review => review.BookingId);
+        //builder.HasOne<Booking>()
+        //    .WithMany()
+        //    .HasForeignKey(review => review.BookingId);
 
 
         //one-one relationship
-        //builder.HasOne<Booking>()
-        //    .WithOne();
+        builder.HasOne<Booking>()
+            .WithOne();
     }
 }
