@@ -22,6 +22,7 @@ internal sealed class BookingRepository : Repository<Booking>, IBookingRepositor
     {
         try
         {
+            //Does not work
             var x = _context.Set<Booking>().Include(b => b.ApartmentId).ToList();
 
         }
