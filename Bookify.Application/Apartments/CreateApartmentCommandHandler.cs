@@ -10,19 +10,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Bookify.Application.Apartments;
-internal sealed class CreateApartmentComandHandler : ICommandHandler<CreateApartmentComand, Guid>
+internal sealed class CreateApartmentCommandHandler : ICommandHandler<CreateApartmentCommand, Guid>
 {
     private readonly IApartmentRepository _apartmentRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateApartmentComandHandler(IApartmentRepository apartmentRepository, IUnitOfWork unitOfWork)
+    public CreateApartmentCommandHandler(IApartmentRepository apartmentRepository, IUnitOfWork unitOfWork)
     {
         _apartmentRepository = apartmentRepository;
         _unitOfWork = unitOfWork;
     }
 
 
-    public async Task<Result<Guid>> Handle(CreateApartmentComand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateApartmentCommand request, CancellationToken cancellationToken)
     {
         var apartment = new Apartment(
             Guid.NewGuid(),

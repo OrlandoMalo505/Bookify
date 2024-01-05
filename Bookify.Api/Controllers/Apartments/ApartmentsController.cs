@@ -20,7 +20,7 @@ public class ApartmentsController : ControllerBase
     [HttpPost]
     public async Task<IResult> CreateApartment()
     {
-        var command = new CreateApartmentComand();
+        var command = new CreateApartmentCommand();
 
         return Results.Ok((await _sender.Send(command)).Value);
     }

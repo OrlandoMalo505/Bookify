@@ -8,4 +8,4 @@ using System.Windows.Input;
 
 namespace Bookify.Application.Apartments;
 
-public record CreateApartmentComand() : ICommand<Guid>;
+public record CreateApartmentCommand() : ICommand<Guid>;
