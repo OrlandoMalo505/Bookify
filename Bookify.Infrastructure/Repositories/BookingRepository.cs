@@ -1,5 +1,6 @@
 ﻿using Bookify.Domain.Apartments;
 using Bookify.Domain.Bookings;
+using Bookify.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -17,8 +18,26 @@ internal sealed class BookingRepository : Repository<Booking>, IBookingRepositor
     {
     }
 
+    public Task Get()
+    {
+        try
+        {
+            var x = _context.Set<Booking>().Include(b => b.ApartmentId).ToList();
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
+        return Task.CompletedTask;
+
+    }
+
     public async Task<bool> IsOverlappingAsync(Apartment apartment, DateRange duration, CancellationToken cancellationToken = default)
     {
+
         return await _context
             .Set<Booking>()
             .AnyAsync(
