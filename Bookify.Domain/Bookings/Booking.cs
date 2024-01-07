@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Bookify.Domain.Bookings;
 public sealed class Booking : Entity
 {
-    private Booking()
+    public Booking()
     {
     }
     private Booking(Guid id,

@@ -22,4 +22,22 @@ public static class ResultExtensions
                 {"errors",  new[]{ result.Error} }
             });
     }
+
+    public static IResult ToOkDetails<T>(this Result<T> result)
+    {
+        if (result.IsFailure)
+        {
+            throw new InvalidOperationException("Can't convert failure result to success");
+        }
+
+        return Results.Problem(
+            statusCode: StatusCodes.Status200OK,
+            type: "Success",
+            title: "200 OK",
+            detail: "200 OK",
+            extensions: new Dictionary<string, object?>
+            {
+                {"data",  new List<T>(){result.Value } }
+            });
+    }
 }

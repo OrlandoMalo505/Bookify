@@ -1,4 +1,6 @@
-﻿using Bookify.Api.Extensions;
+﻿using Azure.Core;
+using Bookify.Api.Extensions;
+using Bookify.Application.Bookings.GetBooking;
 using Bookify.Application.Bookings.ReserveBooking;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -20,15 +22,24 @@ public class BookingsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public Task<IResult> GetBooking(Guid id, CancellationToken cancellationToken)
+    public async Task<IResult> GetBooking(Guid id, CancellationToken cancellationToken)
     {
-        return (Task<IResult>)Results.Ok();
+        var command = new GetBookingQuery(id);
+
+        var result = await _sender.Send(command, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return result.ToProblemDetails();
+        }
+        else
+        {
+            return result.ToOkDetails();
+        }
     }
-
-
     [HttpPost]
     public async Task<IResult> ReserveBooking(
-        ReserveBookingRequest request,
+    ReserveBookingRequest request,
         CancellationToken cancellationToken)
     {
         var command = new ReserveBookingCommand(request.ApartmentId, request.UserId, request.StartDate, request.EndDate);
